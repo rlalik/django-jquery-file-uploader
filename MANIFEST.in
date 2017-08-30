@@ -1,0 +1,3 @@
+recursive-include jqfuploader/templates *
+recursive-include jqfuploader/templatetags *
+recursive-include jqfuploader/static *

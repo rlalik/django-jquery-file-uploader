@@ -15,7 +15,7 @@ def index(request):
     try:
         set = UploadSettings.objects.get(enable_upload=True)
     except UploadSettings.DoesNotExist:
-        return HttpResponse('Sorry, no upload allowed. <a href="/">Go to the main pange</a>')
+        return HttpResponse('Sorry, no upload allowed. <a href="/">Go to the main page</a>')
     except UploadSettings.MultipleObjectsReturned:
         setlist = UploadSettings.objects.filter(enable_upload=True)
         set = setlist[0];
