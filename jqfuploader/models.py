@@ -99,7 +99,10 @@ def auto_delete_file_on_delete(sender, instance, **kwargs):
         os.remove(instance.file.path)
 
 class UploadSettings(models.Model):
-    enable_upload = models.BooleanField(default=True);
-    max_upload_size = models.IntegerField(default=999000000);
-    max_chunk_size = models.IntegerField(default=1000000);
-    allowed_types = models.TextField(default='/(\.|\/)(gif|jpe?g|png|mp4)$/i');
+    enable_upload = models.BooleanField(default=True)
+    max_upload_size = models.IntegerField(default=999000000)
+    max_chunk_size = models.IntegerField(default=1000000)
+    allowed_types = models.TextField(default='/(\.|\/)(gif|jpe?g|png|mp4)$/i')
+    page_title = models.CharField(max_length=100, default="jQuery File Upload")
+    page_notes = models.TextField(),
+    notification_email = models.TextField(),

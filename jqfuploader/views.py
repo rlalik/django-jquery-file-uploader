@@ -4,6 +4,7 @@ import re
 from django.shortcuts import render
 from django.http import HttpResponse, HttpResponseRedirect
 
+from django.core.mail import send_mail
 from django.core.files.base import ContentFile
 from django.views.generic import View, TemplateView
 
@@ -116,6 +117,22 @@ class UploadView(UploadBaseView):
 
         if chunked_upload.is_finished:
             chunked_upload.recorded_md5 = chunked_upload.md5
+
+            try:
+                set = UploadSettings.objects.get(enable_upload=True)
+            except UploadSettings.DoesNotExist:
+                return UploadFinished(chunked_upload)
+            except UploadSettings.MultipleObjectsReturned:
+                setlist = UploadSettings.objects.filter(enable_upload=True)
+                set = setlist[0];
+
+            msg = "File %s: size: %d b\n%s" % ("", 0, "")
+            send_mail(
+                subject="File uploaded",
+                message=msg,
+                from_email=set.notification_email,
+                recipient_list=[set.notification_email]
+            )
             return UploadFinished(chunked_upload)
 
         return UploadFinished(chunked_upload)
